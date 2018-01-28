@@ -1,0 +1,1 @@
+type Artifactory::PackageName = Enum['artifactory', 'jfrog-artifactory-oss', 'jfrog-artifactory-pro']
