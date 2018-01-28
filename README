@@ -1,0 +1,45 @@
+Recommended minimal JVM parameters
+
+The larger your repository or number of concurrent users, the larger you need to
+make the -Xms and -Xmx values accordingly. Recommended minimal values are:
+
+    -server -Xms512m -Xmx2g -Xss256k -XX:+UseG1GC
+
+For more recommendations about your hardware configuration (especially the -Xmx
+parameter), please refer to Recommended Hardware:
+
+https://www.jfrog.com/confluence/display/RTF/System+Requirements#SystemRequirements-RecommendedHardware
+
+
+Where you set your JVM parameters depends on how you are running Artifactory:
+
+For a manual installation, modify
+    JAVA_OPTIONS in $ARTIFACTORY_HOME/bin/artifactory.default.
+
+For a service installation, modify
+    JAVA_OPTIONS  in $ARTIFACTORY_HOME/etc/default
+
+(you will need to stop and then restart the service after making the
+modification)
+
+For an RPM or Debian installation, modify
+    JAVA_OPTIONS in /etc/opt/jfrog/artifactory/default
+
+
+Managed Files and Folders
+
+Artifactory home            /var/opt/jfrog/artifactory          artifactory
+Artifactory etc             /etc/opt/jfrog/artifactory          artifactory
+Artifactory logs            /var/opt/jfrog/artifactory/logs     artifactory
+Artifactory env variables   /etc/opt/jfrog/artifactory/default  artifactory 
+Tomcat home                 /opt/jfrog/artifactory/tomcat	    artifactory  (root for sub dirs)
+Artifactory startup script  /etc/init.d/artifactory             root
+Artifactory binary          /opt/jfrog/artifactory              root
+
+Installing Artifactory OSS from an RPM disribution
+
+```
+wget https://bintray.com/jfrog/artifactory-rpms/rpm -O bintray-jfrog-artifactory-rpms.repo
+sudo mv bintray-jfrog-artifactory-rpms.repo /etc/yum.repos.d/
+sudo yum install jfrog-artifactory-oss
+```
