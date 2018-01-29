@@ -2,6 +2,7 @@
 artifactory::version: 'installed'
 artifactory::repo_location: 'https://jfrog.bintray.com/artifactory-rpms'
 artifactory::manage_package: true
+artifactory::prerequired_packages: []
 artifactory::package_name: 'jfrog-artifactory-oss'
 artifactory::manage_os_users: true
 artifactory::artifactory_user: 'artifactory'
