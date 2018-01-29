@@ -19,7 +19,7 @@ class artifactory (
     String  $artifactory_user,
     String  $artifactory_group,
     Boolean $manage_service,
-    Docker::Ensure
+    Artifactory::Ensure
             $service_ensure,
     String  $service_name,
     Boolean $service_hasstatus,

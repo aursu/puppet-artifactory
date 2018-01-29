@@ -7,10 +7,9 @@
 # @example
 #   include artifactory::config
 class artifactory::config (
-    Boolean $manage_users   = $artifactory::manage_os_users,
-    Docker::UserList
-            $artifactory_user   = $artifactory::artifactory_user,
-    String  $group          = $artifactory::artifactory_group,
+    Boolean $manage_users     = $artifactory::manage_os_users,
+    String  $artifactory_user = $artifactory::artifactory_user,
+    String  $group            = $artifactory::artifactory_group,
 )
 {
     if $manage_users {
