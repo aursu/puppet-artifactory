@@ -6,7 +6,7 @@
 #
 # @example
 #   include artifactory::config
-class artifactory::config {
+class artifactory::config (
     Boolean $manage_users   = $artifactory::manage_os_users,
     Docker::UserList
             $artifactory_user   = $artifactory::artifactory_user,

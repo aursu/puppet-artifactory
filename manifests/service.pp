@@ -6,5 +6,4 @@
 #
 # @example
 #   include artifactory::service
-class artifactory::service {
-}
+class artifactory::service (){}

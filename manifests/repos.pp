@@ -6,7 +6,7 @@
 #
 # @example
 #   include artifactory::repos
-class artifactory::repos {
+class artifactory::repos (
     Boolean $manage_package         = $artifactory::manage_package,
     String  $location               = $artifactory::repo_location,
     Array[String]

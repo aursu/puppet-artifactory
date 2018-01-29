@@ -6,7 +6,7 @@
 #
 # @example
 #   include artifactory::install
-class artifactory::install {
+class artifactory::install (
     Artifactory::PackageName
             $package_name   = $artifactory::package_name,
     Artifactory::Version
