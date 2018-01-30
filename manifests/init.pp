@@ -36,6 +36,22 @@ class artifactory (
             $storage_config,
     Optional[String]
             $storage_config_template,
+    String  $artifactory_home,
+    String  $artifactory_pid,
+    String  $tomcat_home,
+    Optional[String]
+            $java_vm_flavor,
+    Optional[Artifactory::JavaSize]
+            $java_xms,
+    Optional[Artifactory::JavaSize]
+            $java_xmx,
+    Optional[Artifactory::JavaSize]
+            $java_xss,
+    Optional[Boolean]
+            $java_use_g1gc,
+    Optional[Boolean]
+            $java_oom_exit,
+    Integer $catalina_mgmt_port,
 )
 {
   contain 'artifactory::repos'
