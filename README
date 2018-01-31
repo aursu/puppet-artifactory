@@ -1,3 +1,9 @@
+Notes
+- "artifactory::java_manage" flag set to "true" enables class "java" declaration
+  as we need to override attributes "package" and "java_home"
+  https://puppet.com/docs/puppet/5.3/lang_classes.html#resource-like-behavior
+
+
 Recommended minimal JVM parameters
 
 The larger your repository or number of concurrent users, the larger you need to
@@ -36,6 +42,7 @@ Tomcat home                 /opt/jfrog/artifactory/tomcat	    artifactory  (root
 Artifactory startup script  /etc/init.d/artifactory             root
 Artifactory binary          /opt/jfrog/artifactory              root
 
+
 Installing Artifactory OSS from an RPM disribution
 
 ```
@@ -45,8 +52,7 @@ sudo yum install jfrog-artifactory-oss
 ```
 
 
-
-Table 1. Resource limit directives, their equivalent ulimit shell commands and the unit used
+Resource limit directives, their equivalent ulimit shell commands and the unit used
 
 Directive	        ulimit equivalent   Unit
 LimitCPU=           ulimit -t           Seconds
@@ -65,3 +71,7 @@ LimitMSGQUEUE=      ulimit -q           Bytes
 LimitNICE=          ulimit -e           Nice Level
 LimitRTPRIO=        ulimit -r           Realtime Priority
 LimitRTTIME=        No equivalent       Microseconds
+
+Oracle Java download via curl (reflects puppetlabs/java and puppet/archive)
+
+curl -fsSL 'http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jre-8u161-linux-x64.rpm' -b 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie' -D- -o/tmp/jdk-8u162-linux-x64.rpm_20180130-11842-1iicswq
