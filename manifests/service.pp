@@ -39,7 +39,7 @@ class artifactory::service (
 
     # Java
     java::oracle { 'java-1.8':
-        version_major => '8u162',
+        version_major => '8u161',
         version_minor => 'b12',
         url_hash      => '2f38c3b165be4555a1fa6e98c45e0808',
     }
