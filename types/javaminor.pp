@@ -1,0 +1,1 @@
+type Artifactory::JavaMinor = Pattern[/^b\d+$/]
