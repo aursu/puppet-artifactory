@@ -52,6 +52,13 @@ class artifactory (
     Optional[Boolean]
             $java_oom_exit,
     Integer $catalina_mgmt_port,
+    Boolean $java_manage,
+    Boolean $oracle_java,
+    Artifactory::JavaMajor
+            $java_version_major,
+    Artifactory::JavaMinor
+            $java_version_minor,
+    String  $java_url_hash,
 )
 {
   contain 'artifactory::repos'
