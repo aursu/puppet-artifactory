@@ -11,6 +11,7 @@ artifactory::service_name: 'artifactory'
 artifactory::service_systemd_template: 'artifactory/systemd/artifactory.service.erb'
 artifactory::service_config: '/etc/sysconfig/artifactory'
 artifactory::service_config_template: 'artifactory/systemd/artifactory.systemd.erb'
+artifactory::service_setenv_template: 'artifactory/setenv.sh.erb'
 # http://www.oracle.com/technetwork/java/whitepaper-135217.html
 artifactory::java_vm_flavor: 'server'
 # the initial and minimum Java heap size
