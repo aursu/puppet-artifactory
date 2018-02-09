@@ -8,26 +8,28 @@
 #   include artifactory::install
 class artifactory::install (
     Artifactory::PackageName
-            $package_name       = $artifactory::package_name,
+            $package_name           = $artifactory::params::package_name,
     Artifactory::Version
-            $version            = $artifactory::version,
-    Boolean $manage_package     = $artifactory::manage_package,
-    Boolean $java_manage        = $artifactory::java_manage,
-    Boolean $oracle_java        = $artifactory::oracle_java,
-    Artifactory::JavaMajor
-            $java_version_major = $artifactory::java_version_major,
-    Artifactory::JavaMinor
-            $java_version_minor = $artifactory::java_version_minor,
-    String  $java_url_hash      = $artifactory::java_url_hash,
-)
+            $version                = $artifactory::version,
+    Boolean $manage_package         = $artifactory::manage_package,
+    Boolean $java_manage            = $artifactory::java_manage,
+    Boolean $oracle_java            = $artifactory::oracle_java,
+    Lsys::Java8Major
+            $java_version_major     = $artifactory::java_version_major,
+    Lsys::JavaMinor
+            $java_version_minor     = $artifactory::java_version_minor,
+    String  $java_url_hash          = $artifactory::java_url_hash,
+    Array[String]
+            $prerequired_packages   = $artifactory::prerequired_packages,
+) inherits artifactory::params
 {
     if $manage_package {
         # Java
         if $java_manage {
             if $oracle_java {
                 class { 'java':
-                    package => 'jdk1.8',
-                    java_home => '/usr/java/default'
+                    package   => $artifactory::params::oracle_java_package,
+                    java_home => $artifactory::params::oracle_java_home,
                 }
                 java::oracle { 'jdk-1.8':
                     version_major => $java_version_major,
@@ -40,6 +42,12 @@ class artifactory::install (
             }
             else {
                 class { 'java': }
+            }
+        }
+
+        $prerequired_packages.each |String $reqp| {
+            package { $reqp:
+                ensure => installed,
             }
         }
 

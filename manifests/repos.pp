@@ -8,18 +8,11 @@
 #   include artifactory::repos
 class artifactory::repos (
     Boolean $manage_package         = $artifactory::manage_package,
-    String  $location               = $artifactory::repo_location,
-    Array[String]
-            $prerequired_packages   = $artifactory::prerequired_packages,
-)
-{
-    $prerequired_packages.each |String $reqp| {
-        package { $reqp:
-            ensure => installed,
-        }
-    }
+    String  $location               = $artifactory::params::repo_location,
 
-    if ($manage_package) {
+) inherits artifactory::params
+{
+    if $manage_package {
         yumrepo { 'artifactory':
             descr    => 'jFrog Artifactory repository',
             baseurl  => $location,
