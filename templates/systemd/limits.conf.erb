@@ -1,0 +1,11 @@
+[Service]
+<% if @nofile_rlimit and (@nofile_rlimit == 'unlimited' or @nofile_rlimit.to_i > @minnofilemax) -%>
+LimitNOFILE=<%= @nofile_rlimit %>
+<% else -%>
+LimitNOFILE=<%= @minnofilemax %>
+<% end %>
+<% if @nproc_rlimit and (@nproc_rlimit == 'unlimited' or @nproc_rlimit.to_i > @minnbprocess) -%>
+LimitNPROC=<%= @nproc_rlimit %>
+<% else -%>
+LimitNPROC=<%= @minnbprocess %>
+<% end %>

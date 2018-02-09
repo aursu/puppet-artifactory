@@ -1,0 +1,17 @@
+[Unit]
+Description=jFrog Artifactory service on Tomcat Servlet Engine
+After=network.target
+
+[Service]
+Type=forking
+EnvironmentFile=-/etc/environment
+EnvironmentFile=-<%= @service_config %>
+Restart=always
+RestartSec=5
+User=<%= @artifactory_user %>
+Group=<%= @artifactory_group %>
+PIDFile=<%= @artifactory_pid %>
+ExecStart=<%= @tomcat_home %>/bin/catalina.sh start
+
+[Install]
+WantedBy=multi-user.target
