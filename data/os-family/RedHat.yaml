@@ -1,3 +1,1 @@
 ---
-artifactory::artifactory_pid: '/var/opt/jfrog/run/artifactory.pid'
-artifactory::tomcat_home: '/opt/jfrog/artifactory/tomcat'
