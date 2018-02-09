@@ -7,36 +7,68 @@
 # @example
 #   include artifactory::service
 class artifactory::service (
-    String  $artifactory_home    = $artifactory::artifactory_home,
-    String  $artifactory_user    = $artifactory::artifactory_user,
-    String  $artifactory_pid     = $artifactory::artifactory_pid,
-    String  $tomcat_home         = $artifactory::tomcat_home,
+
+    String  $service_name               = $artifactory::service_name.
+    String  $service_systemd_template   = $artifactory::service_systemd_template,
+    String  $service_config             = $artifactory::service_config,
+    String  $service_config_template    = $artifactory::service_config_template,
+    String  $artifactory_user           = $artifactory::artifactory_user,
+    String  $artifactory_group          = $artifactory::artifactory_group,
+    String  $artifactory_home           = $artifactory::params::artifactory_home,
+    String  $artifactory_pid            = $artifactory::params::artifactory_pid,
+    String  $tomcat_home                = $artifactory::params::tomcat_home,
     Optional[
         Enum['server', 'client']
-    ]       $java_vm_flavor      = $artifactory::java_vm_flavor,
-    Optional[Artifactory::JavaSize]
-            $java_xms            = $artifactory::java_xms,
-    Optional[Artifactory::JavaSize]
-            $java_xmx            = $artifactory::java_xmx,
-    Optional[Artifactory::JavaSize]
-            $java_xss            = $artifactory::java_xss,
+    ]       $java_vm_flavor             = $artifactory::java_vm_flavor,
+    Optional[Lsys::JavaSize]
+            $java_xms                   = $artifactory::java_xms,
+    Optional[Lsys::JavaSize]
+            $java_xmx                   = $artifactory::java_xmx,
+    Optional[Lsys::JavaSize]
+            $java_xss                   = $artifactory::java_xss,
     Optional[Boolean]
-            $java_use_g1gc       = $artifactory::java_use_g1gc,
+            $java_use_g1gc              = $artifactory::java_use_g1gc,
     Optional[Boolean]
-            $java_oom_exit       = $artifactory::java_oom_exit,
-    Integer $catalina_mgmt_port  = $artifactory::catalina_mgmt_port,
+            $java_oom_exit              = $artifactory::java_oom_exit,
+    Integer $catalina_mgmt_port         = $artifactory::catalina_mgmt_port,
+    Optional[Lsys::RLimit]
+            $nofile_rlimit              = $artifactory::nofile_rlimit,
+    Optional[Lsys::RLimit]
+            $nproc_rlimit               = $artifactory::nproc_rlimit,
+    Lsys::RLimit
+            $minnofilemax               = $artifactory::params::minnofilemax,
+    Lsys::RLimit
+            $minnbprocess               = $artifactory::params::minnbprocess,
+) inherits artifactory::params
+{
+    include lsys::systemd
 
-){
-    # check Artifactory home directory
-    file { $artifactory_home:
-        ensure => directory,
+    File {
+        owner   => '0',
+        group   => '0',
+        mode    => '0644',
     }
 
-    # check Tomcat home directory
-    file { $tomcat_home:
-        ensure => directory,
-    }
+    if $::is_init_systemd {
+        file { $service_config:
+            content => template($service_config_template),
+        }
 
-    $catalina_pid_folder = dirname($artifactory_pid)
-    $catalina_lock_file = "${catalina_pid_folder}/lock"
+        file { "/usr/lib/systemd/system/${service_name}.service":
+            content => template($service_systemd_template),
+            require => File[$service_config],
+            notify  => Exec['systemd-reload'],
+        }
+
+        file { "/etc/systemd/system/${service_name}.service.d":
+            ensure                  => directory,
+            mode                    => '0755',
+            selinux_ignore_defaults => true,
+        }
+
+        file { "/etc/systemd/system/${service_name}.service.d/limits.conf":
+            content => template('artifactory/systemd/limits.conf.erb'),
+            notify  => Exec['systemd-reload'],
+        }
+    }
 }
