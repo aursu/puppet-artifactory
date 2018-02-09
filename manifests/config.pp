@@ -58,6 +58,7 @@ class artifactory::config (
         file { $etc_dir: }
     }
 
+    # runtime data and tomcat home directory
     $norecurse = [
         "${artifactory_home}/logs",
         $tomcat_home,
@@ -65,8 +66,6 @@ class artifactory::config (
         "${tomcat_home}/temp",
         "${tomcat_home}/work",
     ]
-
-    # runtime data and tomcat home directory
     file { $norecurse:
         recurse => false,
     }
