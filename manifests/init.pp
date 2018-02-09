@@ -12,7 +12,6 @@ class artifactory (
     Artifactory::Version
             $version,
     Boolean $manage_package,
-    String  $repo_location,
     Array[String]
             $prerequired_packages,
     Boolean $manage_os_users,
@@ -22,30 +21,18 @@ class artifactory (
     Artifactory::Ensure
             $service_ensure,
     String  $service_name,
-    Boolean $service_hasstatus,
-    Boolean $service_hasrestart,
-    Optional[String]
-            $service_ovverides_config,
-    Optional[String]
-            $service_overrides_template,
+    String  $service_systemd_template,
     Optional[String]
             $service_config,
     Optional[String]
             $service_config_template,
     Optional[String]
-            $storage_config,
-    Optional[String]
-            $storage_config_template,
-    String  $artifactory_home,
-    String  $artifactory_pid,
-    String  $tomcat_home,
-    Optional[String]
             $java_vm_flavor,
-    Optional[Artifactory::JavaSize]
+    Optional[Lsys::JavaSize]
             $java_xms,
-    Optional[Artifactory::JavaSize]
+    Optional[LSys::JavaSize]
             $java_xmx,
-    Optional[Artifactory::JavaSize]
+    Optional[Lsys::JavaSize]
             $java_xss,
     Optional[Boolean]
             $java_use_g1gc,
@@ -54,11 +41,15 @@ class artifactory (
     Integer $catalina_mgmt_port,
     Boolean $java_manage,
     Boolean $oracle_java,
-    Artifactory::JavaMajor
+    Lsys::Java8Major
             $java_version_major,
-    Artifactory::JavaMinor
+    Lsys::JavaMinor
             $java_version_minor,
     String  $java_url_hash,
+    Optional[Lsys::RLimit]
+            $nofile_rlimit,
+    Optional[Lsys::RLimit]
+            $nproc_rlimit,
 )
 {
   contain 'artifactory::repos'
