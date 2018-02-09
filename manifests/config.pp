@@ -32,7 +32,6 @@ class artifactory::config (
         User[$artifactory_user] -> [
             File[$artifactory_home],
             File[$tomcat_home],
-            File[$tomcat_webapps]
         ]
         User[$artifactory_user] -> File <| title == $run_dir or title == $etc_dir |>
     }
@@ -40,8 +39,10 @@ class artifactory::config (
     # Permissions control
     File {
         ensure  => directory,
-        recurse => remote,
+        recurse => true,
         owner   => $artifactory_user,
+        # do not replace symlink - manage target directory
+        links   => follow,
     }
 
     # Artifactory home directory
@@ -57,8 +58,16 @@ class artifactory::config (
         file { $etc_dir: }
     }
 
-    # Tomcat home directory
-    file { $tomcat_home:
+    $norecurse = [
+        "${artifactory_home}/logs",
+        $tomcat_home,
+        "${tomcat_home}/logs",
+        "${tomcat_home}/temp",
+        "${tomcat_home}/work",
+    ]
+
+    # runtime data and tomcat home directory
+    file { $norecurse:
         recurse => false,
     }
 
