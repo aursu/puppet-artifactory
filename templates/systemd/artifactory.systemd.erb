@@ -4,7 +4,9 @@ ARTIFACTORY_USER=<%= @artifactory_user %>
 ARTIFACTORY_PID=<%= @artifactory_pid %>
 
 TOMCAT_HOME=<%= @tomcat_home %>
-JAVA_OPTS="<% -%>
+CATALINA_HOME=<%= @tomcat_home %>
+
+JAVA_OPTIONS="<% -%>
 <% if @java_vm_flavor -%>
 <% if @java_vm_flavor == 'server' -%>
  -server<% else -%>
@@ -21,5 +23,4 @@ JAVA_OPTS="<% -%>
 <% end -%>
 <% if @java_use_g1gc %> -XX:+UseG1GC<% end -%>
 <% if @java_oom_exit %> -XX:OnOutOfMemoryError=\"kill -9 %p\"<% end -%>
- -Djruby.compile.invokedynamic=false -Dfile.encoding=UTF8 -Dartdist=rpm -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -Djava.security.egd=file:/dev/urandom"
-CATALINA_MGNT_PORT=<%= @catalina_mgmt_port %>
+ -Djruby.compile.invokedynamic=false -Dfile.encoding=UTF8 -Dartdist=rpm -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -Djava.security.egd=file:/dev/./urandom"
