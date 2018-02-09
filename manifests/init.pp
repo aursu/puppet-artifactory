@@ -18,14 +18,13 @@ class artifactory (
     String  $artifactory_user,
     String  $artifactory_group,
     Boolean $manage_service,
-    Artifactory::Ensure
+    Lsys::Ensure
             $service_ensure,
     String  $service_name,
     String  $service_systemd_template,
-    Optional[String]
-            $service_config,
-    Optional[String]
-            $service_config_template,
+    String  $service_config,
+    String  $service_config_template,
+    String  $service_setenv_template,
     Optional[String]
             $java_vm_flavor,
     Optional[Lsys::JavaSize]
