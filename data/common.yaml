@@ -1,27 +1,16 @@
 ---
 artifactory::version: 'installed'
-artifactory::repo_location: 'https://jfrog.bintray.com/artifactory-rpms'
 artifactory::manage_package: true
 artifactory::prerequired_packages: []
-artifactory::package_name: 'jfrog-artifactory-oss'
 artifactory::manage_os_users: true
 artifactory::artifactory_user: 'artifactory'
 artifactory::artifactory_group: 'artifactory'
 artifactory::manage_service: true
 artifactory::service_ensure: 'running'
 artifactory::service_name: 'artifactory'
-artifactory::service_hasstatus: true
-artifactory::service_hasrestart: true
-artifactory::service_ovverides_config: '/etc/systemd/system/docker.service.d/service-overrides.conf'
-artifactory::service_overrides_template: 'docker/etc/systemd/system/docker.service.d/service-overrides.conf.erb'
-artifactory::service_config: '/etc/sysconfig/docker'
-artifactory::service_config_template: 'docker/etc/sysconfig/docker.systemd.erb'
-artifactory::storage_config: '/etc/default/docker-storage'
-artifactory::storage_config_template: 'docker/etc/sysconfig/docker-storage.erb'
-artifactory::artifactory_home: '/var/opt/jfrog/artifactory'
-# default values (different on RedHat systems)
-artifactory::artifactory_pid: '/var/opt/jfrog/artifactory/run/artifactory.pid'
-artifactory::tomcat_home: '/var/opt/jfrog/artifactory/tomcat'
+artifactory::service_systemd_template: 'artifactory/systemd/artifactory.service.erb'
+artifactory::service_config: '/etc/sysconfig/artifactory'
+artifactory::service_config_template: 'artifactory/systemd/artifactory.systemd.erb'
 # http://www.oracle.com/technetwork/java/whitepaper-135217.html
 artifactory::java_vm_flavor: 'server'
 # the initial and minimum Java heap size
@@ -39,3 +28,8 @@ artifactory::oracle_java: true
 artifactory::java_version_major: '8u161'
 artifactory::java_version_minor: 'b12'
 artifactory::java_url_hash: '2f38c3b165be4555a1fa6e98c45e0808'
+# limits for daemon startup
+# nofile
+artifactory::nofile_rlimit: ~
+# nproc
+artifactory::nproc_rlimit: ~
