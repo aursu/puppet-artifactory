@@ -1,1 +1,0 @@
-type Artifactory::JavaSize = Pattern[/^[0-9]+[gGmMkK]?$/]

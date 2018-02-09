@@ -1,1 +1,0 @@
-type Artifactory::Ensure = Enum['stopped', 'running']
