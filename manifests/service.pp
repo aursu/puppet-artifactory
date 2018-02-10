@@ -8,7 +8,7 @@
 #   include artifactory::service
 class artifactory::service (
 
-    String  $service_name               = $artifactory::service_name.
+    String  $service_name               = $artifactory::service_name,
     String  $service_systemd_template   = $artifactory::service_systemd_template,
     String  $service_config             = $artifactory::service_config,
     String  $service_config_template    = $artifactory::service_config_template,
