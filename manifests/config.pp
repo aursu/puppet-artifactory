@@ -69,8 +69,6 @@ class artifactory::config (
     file { $norecurse:
         recurse => false,
     }
-    
-    
 
     # Tomcat webapps directory
     file { "${tomcat_webapps}": }
