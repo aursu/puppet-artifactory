@@ -60,15 +60,17 @@ class artifactory::config (
 
     # runtime data and tomcat home directory
     $norecurse = [
-        "${artifactory_home}/logs",
         $tomcat_home,
-        "${tomcat_home}/logs",
-        "${tomcat_home}/temp",
-        "${tomcat_home}/work",
+        "${artifactory_home}/logs",
+        "${artifactory_home}/logs/catalina",
+        "${artifactory_home}/temp",
+        "${artifactory_home}/work",
     ]
     file { $norecurse:
         recurse => false,
     }
+    
+    
 
     # Tomcat webapps directory
     file { "${tomcat_webapps}": }
