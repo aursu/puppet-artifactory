@@ -1,5 +1,5 @@
 {
-  "name": "artifactory",
+  "name": "aursu-artifactory",
   "version": "0.1.0",
   "author": "aursu",
   "summary": "Artifactory OSS installation and management",
@@ -11,7 +11,7 @@
       "version_requirement": ">= 2.4.0 < 3.0.0"
     },
     {
-      "name": "lsys",
+      "name": "aursu/lsys",
       "version_requirement": ">= 0.1.0 < 1.0.0"
     }
   ],
