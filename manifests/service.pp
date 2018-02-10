@@ -54,7 +54,7 @@ class artifactory::service (
         # replace distributed with Artifactory setenv.sh file with custom
         # considering that Artifactory is managed by Puppet on systemd running
         # system
-        file { "${tomcat_home}/bin/setenv.sh"
+        file { "${tomcat_home}/bin/setenv.sh":
             content => template($service_config_template),
         }
 
