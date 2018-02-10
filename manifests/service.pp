@@ -56,6 +56,7 @@ class artifactory::service (
         # system
         file { "${tomcat_home}/bin/setenv.sh":
             content => template($service_config_template),
+            owner   => $artifactory_user,
         }
 
         # environment file (or sysconfig file)
