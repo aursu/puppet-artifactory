@@ -24,3 +24,4 @@ JAVA_OPTIONS="<% -%>
 <% if @java_use_g1gc %> -XX:+UseG1GC<% end -%>
 <% if @java_oom_exit %> -XX:OnOutOfMemoryError=\"kill -9 %p\"<% end -%>
  -Djruby.compile.invokedynamic=false -Dfile.encoding=UTF8 -Dartdist=rpm -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -Djava.security.egd=file:/dev/./urandom"
+ 
