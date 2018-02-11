@@ -18,7 +18,7 @@ class artifactory (
     Boolean $manage_service,
     Lsys::Ensure
             $service_ensure,
-    Boolean $service_enable.
+    Boolean $service_enable,
     String  $service_name,
     String  $service_systemd_template,
     String  $service_config,
