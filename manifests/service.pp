@@ -55,7 +55,7 @@ class artifactory::service (
         # considering that Artifactory is managed by Puppet on systemd running
         # system
         file { "${tomcat_home}/bin/setenv.sh":
-            content => template($service_config_template),
+            content => template($service_setenv_template),
             owner   => $artifactory_user,
         }
 
