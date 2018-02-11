@@ -54,7 +54,8 @@ class artifactory::service (
         # replace distributed with Artifactory setenv.sh file with custom
         # considering that Artifactory is managed by Puppet on systemd running
         # system
-        file { "${tomcat_home}/bin/setenv.sh":
+        file { 'setenv.sh':
+            path    => "${tomcat_home}/bin/setenv.sh",
             content => template($service_setenv_template),
             owner   => $artifactory_user,
         }
@@ -67,7 +68,10 @@ class artifactory::service (
         # systemd unit
         file { "/usr/lib/systemd/system/${service_name}.service":
             content => template($service_systemd_template),
-            require => File[$service_config],
+            require => [
+                File[$service_config],
+                File['setenv.sh']
+            ],
             notify  => Exec['systemd-reload'],
         }
 
