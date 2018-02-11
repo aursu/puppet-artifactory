@@ -46,7 +46,10 @@ class artifactory::config (
     }
 
     # Artifactory home directory
-    file { $artifactory_home: }
+    file { $artifactory_home:
+        # there are some dead links inside - disable resolution
+        links => manage,
+    }
 
     # Artifactory runtime directory
     unless $run_dir in ['/var/run', '/run'] {
