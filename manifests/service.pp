@@ -7,8 +7,10 @@
 # @example
 #   include artifactory::service
 class artifactory::service (
-
     String  $service_name               = $artifactory::service_name,
+    Lsys::Ensure
+            $service_ensure             = $artifactory::service_ensure,
+    Boolean $service_enable             = $artifactory::service_enable,
     String  $service_systemd_template   = $artifactory::service_systemd_template,
     String  $service_config             = $artifactory::service_config,
     String  $service_config_template    = $artifactory::service_config_template,
@@ -85,5 +87,12 @@ class artifactory::service (
             content => template('artifactory/systemd/limits.conf.erb'),
             notify  => Exec['systemd-reload'],
         }
+    }
+
+    service { $service_name :
+        ensure     => $service_ensure,
+        hasstatus  => true,
+        hasrestart => true,
+        enable     => $service_enable,
     }
 }

@@ -7,6 +7,7 @@ artifactory::artifactory_user: 'artifactory'
 artifactory::artifactory_group: 'artifactory'
 artifactory::manage_service: true
 artifactory::service_ensure: 'running'
+artifactory::service_enable: true
 artifactory::service_name: 'artifactory'
 artifactory::service_systemd_template: 'artifactory/systemd/artifactory.service.erb'
 artifactory::service_config: '/etc/sysconfig/artifactory'
