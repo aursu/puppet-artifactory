@@ -38,7 +38,7 @@ class artifactory::install (
                 }
                 # by including class java we expect Package[java] resource but
                 # actually it managed by Java::Oracle resource
-                Java::Oracle['jdk-1.8'] -> Package <| name == 'java' |>
+                Java::Oracle['jdk-1.8'] -> Package <| title == 'java' |>
             }
             else {
                 class { 'java': }
