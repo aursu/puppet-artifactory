@@ -8,7 +8,7 @@
 #   include artifactory::service
 class artifactory::service (
     String  $service_name               = $artifactory::service_name,
-    Lsys::Ensure
+    Lsys::SrvEnsure
             $service_ensure             = $artifactory::service_ensure,
     Boolean $service_enable             = $artifactory::service_enable,
     String  $service_systemd_template   = $artifactory::service_systemd_template,

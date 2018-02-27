@@ -16,7 +16,7 @@ class artifactory (
     String  $artifactory_user,
     String  $artifactory_group,
     Boolean $manage_service,
-    Lsys::Ensure
+    Lsys::SrvEnsure
             $service_ensure,
     Boolean $service_enable,
     String  $service_name,
