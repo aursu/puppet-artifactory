@@ -41,7 +41,7 @@ class artifactory (
     Boolean $oracle_java,
     Lsys::Java8Major
             $java_version_major,
-    Lsys::JavaMinor
+    Lsys::Java8Minor
             $java_version_minor,
     String  $java_url_hash,
     Optional[Lsys::RLimit]

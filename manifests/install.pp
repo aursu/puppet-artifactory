@@ -16,7 +16,7 @@ class artifactory::install (
     Boolean $oracle_java            = $artifactory::oracle_java,
     Lsys::Java8Major
             $java_version_major     = $artifactory::java_version_major,
-    Lsys::JavaMinor
+    Lsys::Java8Minor
             $java_version_minor     = $artifactory::java_version_minor,
     String  $java_url_hash          = $artifactory::java_url_hash,
     Array[String]
