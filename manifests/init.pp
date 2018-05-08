@@ -28,7 +28,7 @@ class artifactory (
             $java_vm_flavor,
     Optional[Lsys::JavaSize]
             $java_xms,
-    Optional[LSys::JavaSize]
+    Optional[Lsys::JavaSize]
             $java_xmx,
     Optional[Lsys::JavaSize]
             $java_xss,
