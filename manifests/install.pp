@@ -51,9 +51,9 @@ class artifactory::install (
             }
         }
 
-        package { 'artifactory':
-            ensure   => $version,
-            name     => $package_name,
+        package { $package_name:
+            ensure => $version,
+            alias  => 'artifactory',
         }
     }
 }
