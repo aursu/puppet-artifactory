@@ -14,13 +14,12 @@ class artifactory::repos (
 {
     if $manage_package {
         yumrepo { 'artifactory':
-            descr    => 'jFrog Artifactory repository',
-            baseurl  => $location,
-            gpgcheck => false,
+            descr         => 'jFrog Artifactory repository',
+            baseurl       => $location,
+            gpgcheck      => false,
             repo_gpgcheck => false,
-            enabled  => true,
+            enabled       => true,
         }
         Yumrepo['artifactory'] -> Package <| name == 'artifactory' |>
     }
 }
-
