@@ -39,11 +39,6 @@ class artifactory (
     Integer $catalina_mgmt_port,
     Boolean $java_manage,
     Boolean $oracle_java,
-    Lsys::Java8Major
-            $java_version_major,
-    Lsys::Java8Minor
-            $java_version_minor,
-    String  $java_url_hash,
     Optional[Lsys::RLimit]
             $nofile_rlimit,
     Optional[Lsys::RLimit]
