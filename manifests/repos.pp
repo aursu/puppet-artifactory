@@ -9,7 +9,6 @@
 class artifactory::repos (
     Boolean $manage_package         = $artifactory::manage_package,
     String  $location               = $artifactory::params::repo_location,
-
 ) inherits artifactory::params
 {
     if $manage_package {
@@ -20,6 +19,5 @@ class artifactory::repos (
             repo_gpgcheck => false,
             enabled       => true,
         }
-        Yumrepo['artifactory'] -> Package <| name == 'artifactory' |>
     }
 }

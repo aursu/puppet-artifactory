@@ -45,6 +45,8 @@ class artifactory::service (
 ) inherits artifactory::params
 {
     include lsys::systemd
+    include artifactory::install
+    include artifactory::config
 
     File {
         owner   => root,
@@ -72,9 +74,10 @@ class artifactory::service (
             content => template($service_systemd_template),
             require => [
                 File[$service_config],
-                File['setenv.sh']
+                File['setenv.sh'],
             ],
             notify  => Exec['systemd-reload'],
+            before  => Service['artifactory'],
         }
 
         file { "/etc/systemd/system/${service_name}.service.d":
@@ -86,6 +89,7 @@ class artifactory::service (
         file { "/etc/systemd/system/${service_name}.service.d/limits.conf":
             content => template('artifactory/systemd/limits.conf.erb'),
             notify  => Exec['systemd-reload'],
+            before  => Service['artifactory'],
         }
     }
 
@@ -94,5 +98,10 @@ class artifactory::service (
         hasstatus  => true,
         hasrestart => true,
         enable     => $service_enable,
+        alias      => 'artifactory',
+        require    => Package['artifactory'],
     }
+
+    # all Artifactory configuration should be set before service start
+    File <| tag == 'artifactory::config' |> -> Service['artifactory']
 }

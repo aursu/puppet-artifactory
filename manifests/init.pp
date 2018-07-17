@@ -45,10 +45,4 @@ class artifactory (
             $nproc_rlimit,
 )
 {
-  contain 'artifactory::repos'
-  contain 'artifactory::install'
-  contain 'artifactory::config'
-  contain 'artifactory::service'
-
-  Class['artifactory::repos'] -> Class['artifactory::install'] -> Class['artifactory::config'] ~> Class['artifactory::service']
 }

@@ -18,6 +18,8 @@ class artifactory::install (
             $prerequired_packages   = $artifactory::prerequired_packages,
 ) inherits artifactory::params
 {
+    include artifactory::repos
+
     if $manage_package {
         # Java
         if $java_manage {
@@ -33,12 +35,14 @@ class artifactory::install (
         $prerequired_packages.each |String $reqp| {
             package { $reqp:
                 ensure => installed,
+                before => Package['artifactory'],
             }
         }
 
         package { $package_name:
-            ensure => $version,
-            alias  => 'artifactory',
+            ensure  => $version,
+            alias   => 'artifactory',
+            require => Yumrepo['artifactory'],
         }
     }
 }

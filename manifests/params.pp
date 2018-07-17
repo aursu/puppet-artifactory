@@ -1,3 +1,4 @@
+# module hardcoded parameters
 class artifactory::params {
 
     # installation assets and settings

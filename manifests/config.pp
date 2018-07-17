@@ -17,6 +17,8 @@ class artifactory::config (
     String  $run_dir          = $artifactory::params::run_dir,
 ) inherits artifactory::params
 {
+    include artifactory::install
+
     if $manage_users {
         group { $group:
             ensure => 'present',
@@ -43,6 +45,7 @@ class artifactory::config (
         owner   => $artifactory_user,
         # do not replace symlink - manage target directory
         links   => follow,
+        require => Package['artifactory'],
     }
 
     # Artifactory home directory
@@ -74,6 +77,5 @@ class artifactory::config (
     }
 
     # Tomcat webapps directory
-    file { "${tomcat_webapps}": }
+    file { $tomcat_webapps: }
 }
-
