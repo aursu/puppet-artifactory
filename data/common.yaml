@@ -15,6 +15,7 @@ artifactory::service_config_template: 'artifactory/systemd/artifactory.systemd.e
 artifactory::service_setenv_template: 'artifactory/setenv.sh.erb'
 # http://www.oracle.com/technetwork/java/whitepaper-135217.html
 artifactory::java_vm_flavor: 'server'
+# https://www.jfrog.com/confluence/display/RTF/Installing+on+Linux+Solaris+or+Mac+OS#InstallingonLinuxSolarisorMacOS-SettingJavaMemoryParameters
 # the initial and minimum Java heap size
 artifactory::java_xms: '512m'
 # the maximum Java heap size
