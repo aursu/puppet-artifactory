@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# settings from /etc/opt/jfrog/artifactory/default moved into
+# /etc/sysconfig/artifactory which included as EnvironmentFile into systemd unit
+
 export CATALINA_OPTS="$CATALINA_OPTS $JAVA_OPTIONS -Dartifactory.home=$ARTIFACTORY_HOME"
 export CATALINA_PID=$ARTIFACTORY_PID
 export CATALINA_HOME="$TOMCAT_HOME"
