@@ -26,11 +26,11 @@ class artifactory::install (
             if $oracle_java {
                 include javalocal
                 include javalocal::java8
-
                 Class['javalocal::java8'] -> Class['artifactory']
             }
             else {
                 class { 'java': }
+                Class['java'] -> Class['artifactory']
             }
         }
 
