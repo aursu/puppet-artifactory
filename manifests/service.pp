@@ -44,6 +44,8 @@ class artifactory::service (
             $minnbprocess               = $artifactory::params::minnbprocess,
 ) inherits artifactory::params
 {
+    require artifactory
+
     include lsys::systemd
     include artifactory::install
     include artifactory::config
