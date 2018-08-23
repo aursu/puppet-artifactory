@@ -15,6 +15,7 @@ class artifactory::config (
     String  $tomcat_webapps   = $artifactory::params::tomcat_webapps,
     String  $etc_dir          = $artifactory::params::etc_dir,
     String  $run_dir          = $artifactory::params::run_dir,
+    String  $log_dir          = $artifactory::params::log_dir,
 ) inherits artifactory::params
 {
     include artifactory::install
@@ -67,8 +68,8 @@ class artifactory::config (
     # runtime data and tomcat home directory
     $norecurse = [
         $tomcat_home,
-        "${artifactory_home}/logs",
-        "${artifactory_home}/logs/catalina",
+        "${log_dir}",
+        "${log_dir}/catalina",
         "${artifactory_home}/temp",
         "${artifactory_home}/work",
     ]
