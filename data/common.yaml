@@ -33,3 +33,9 @@ artifactory::oracle_java: true
 artifactory::nofile_rlimit: ~
 # nproc
 artifactory::nproc_rlimit: ~
+artifactory::use_postgres: true
+artifactory::database_host: 'localhost'
+artifactory::database_port: 5432
+artifactory::database_name: 'artifactory'
+artifactory::database_username: 'artifactory'
+artifactory::database_password: ~

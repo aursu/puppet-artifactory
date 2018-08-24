@@ -43,6 +43,14 @@ class artifactory (
             $nofile_rlimit,
     Optional[Lsys::RLimit]
             $nproc_rlimit,
+    Boolean $use_postgres,
+    String  $database_host,
+    Lsys::Numerical
+            $database_port,
+    String  $database_name,
+    String  $database_username,
+    Optional[String]
+            $database_password,
 )
 {
 }
