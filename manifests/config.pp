@@ -7,7 +7,6 @@
 # @example
 #   include artifactory::config
 class artifactory::config (
-    String  $
     Boolean $manage_users      = $artifactory::manage_os_users,
     String  $artifactory_user  = $artifactory::artifactory_user,
     String  $group             = $artifactory::artifactory_group,
@@ -17,13 +16,6 @@ class artifactory::config (
     String  $etc_dir           = $artifactory::params::etc_dir,
     String  $run_dir           = $artifactory::params::run_dir,
     String  $log_dir           = $artifactory::params::log_dir,
-    Boolean $use_postgres      = $artifactory::use_postgres,
-    String  $database_host     = $artifactory::database_host,
-    Lsys::Numerical
-            $database_port     = $artifactory::database_port,
-    String  $database_name     = $artifactory::database_database,
-    String  $database_username = $artifactory::database_username,
-    String  $database_password = $artifactory::database_password,
 ) inherits artifactory::params
 {
     include artifactory::install
@@ -88,10 +80,4 @@ class artifactory::config (
 
     # Tomcat webapps directory
     file { $tomcat_webapps: }
-
-    if $use_postgres {
-        file { ""
-
-        }
-    }
 }
