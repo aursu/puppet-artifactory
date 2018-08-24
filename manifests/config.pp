@@ -80,6 +80,7 @@ class artifactory::config (
         "${log_dir}/catalina",
         "${artifactory_home}/temp",
         "${artifactory_home}/work",
+        "${artifactory_home}/etc",
     ]
     file { $norecurse:
         recurse => false,
