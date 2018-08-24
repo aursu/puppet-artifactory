@@ -1,6 +1,11 @@
 # artifactory::service
 #
-# A description of what this class does
+# Class artifactory::service manages Systemd settings for jFrog Artifactory
+# and enable/start it.
+#
+# Artifactory JVM parameters located in file /etc/sysconfig/artifactory
+# JAVA_HOME variable located in /etc/environment (managed by javalocal or java
+# classes)
 #
 # @summary A short summary of the purpose of this class
 #
