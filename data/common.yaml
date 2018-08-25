@@ -39,3 +39,4 @@ artifactory::database_port: 5432
 artifactory::database_name: 'artifactory'
 artifactory::database_username: 'artifactory'
 artifactory::database_password: ~
+artifactory::manage_jdbc_driver: true

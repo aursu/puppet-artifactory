@@ -74,6 +74,7 @@ class artifactory::service (
         # environment file (or sysconfig file)
         file { $service_config:
             content => template($service_config_template),
+            notify  => Service['artifactory'],
         }
 
         # systemd unit

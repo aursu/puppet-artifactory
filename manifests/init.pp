@@ -51,6 +51,7 @@ class artifactory (
     String  $database_username,
     Optional[String]
             $database_password,
+    Boolean $manage_jdbc_driver,
 )
 {
 }
