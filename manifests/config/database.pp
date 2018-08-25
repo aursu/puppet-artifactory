@@ -27,7 +27,13 @@ class artifactory::config::database (
         if $manage_jdbc_driver {
             class { 'postgresql::lib::java':
                 package_name => 'postgresql-jdbc',
+                before       => File['artifactory-jdbc'],
             }
+        }
+        file { "${artifactory_home}/tomcat/lib/postgresql-jdbc.jar":
+            ensure => 'link',
+            target => '/usr/share/java/postgresql-jdbc.jar',        
+            alias  => 'artifactory-jdbc',
         }
     }
 }
