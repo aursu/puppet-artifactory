@@ -32,7 +32,7 @@ class artifactory::config::database (
         }
         file { "${artifactory_home}/tomcat/lib/postgresql-jdbc.jar":
             ensure => 'link',
-            target => '/usr/share/java/postgresql-jdbc.jar',        
+            target => '/usr/share/java/postgresql-jdbc.jar',
             alias  => 'artifactory-jdbc',
         }
     }
