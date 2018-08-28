@@ -68,7 +68,10 @@ class artifactory::config (
     unless $run_dir in ['/var/run', '/run'] {
         file { $run_dir: }
         if $artifactory_ensure == 'absent' {
-            File[$run_dir] { ensure => 'absent', }
+            File[$run_dir] {
+                ensure => 'absent',
+                force  => true,
+            }
         }
     }
 
@@ -76,14 +79,17 @@ class artifactory::config (
     unless $etc_dir == '/etc' {
         file { $etc_dir: }
         if $artifactory_ensure == 'absent' {
-            File[$etc_dir] { ensure => 'absent', }
+            File[$etc_dir] {
+                ensure => 'absent',
+                force  => true,
+            }
         }
     }
 
     # runtime data and tomcat home directory
     $norecurse = [
         $tomcat_home,
-        "${log_dir}",
+        $log_dir,
         "${log_dir}/catalina",
         "${artifactory_home}/temp",
         "${artifactory_home}/work",
@@ -97,12 +103,16 @@ class artifactory::config (
     file { $tomcat_webapps: }
 
     if $artifactory_ensure == 'absent' {
-        $cleanup_resources = $norecurse + [
+        $cleanup_resources = [
+            $tomcat_home,
             $artifactory_home,
             $tomcat_webapps
         ]
         $cleanup_resources.each |String $path| {
-            File[$path] { ensure => 'absent', }
+            File[$path] {
+                ensure => 'absent',
+                force  => true,
+            }
         }
     }
 }

@@ -113,6 +113,7 @@ class artifactory::service (
             ]
             file { $cleanup_resources:
                 ensure  => 'absent',
+                force   => true,
                 require => Service['artifactory'],
             }
         }
