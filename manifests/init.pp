@@ -7,6 +7,7 @@
 # @example
 #   include artifactory
 class artifactory (
+    String  $ensure,
     Artifactory::Version
             $version,
     Boolean $manage_package,

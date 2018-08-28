@@ -7,6 +7,8 @@
 # @example
 #   include artifactory::install
 class artifactory::install (
+    Enum['absent', 'present']
+            $artifactory_ensure     = $artifactory::ensure,
     Artifactory::PackageName
             $package_name           = $artifactory::params::package_name,
     Artifactory::Version
@@ -41,8 +43,14 @@ class artifactory::install (
             }
         }
 
+        if $artifactory_ensure == 'absent' {
+            $package_ensure = 'absent'
+        }
+        else {
+            $package_ensure = $version
+        }
         package { $package_name:
-            ensure  => $version,
+            ensure  => $package_ensure,
             alias   => 'artifactory',
             require => Yumrepo['artifactory'],
         }

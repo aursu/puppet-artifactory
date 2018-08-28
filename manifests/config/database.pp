@@ -5,6 +5,8 @@
 # @example
 #   include artifactory::config::database
 class artifactory::config::database (
+    Enum['absent', 'present']
+            $artifactory_ensure = $artifactory::ensure,
     String  $artifactory_user   = $artifactory::artifactory_user,
     Boolean $use_postgres       = $artifactory::use_postgres,
     String  $database_host      = $artifactory::database_host,
@@ -21,19 +23,23 @@ class artifactory::config::database (
 
     if $use_postgres {
         file { "${artifactory_home}/etc/db.properties":
+            ensure  => $artifactory_ensure,
             owner   => $artifactory_user,
             content => template('artifactory/postgresql.properties.erb'),
         }
         if $manage_jdbc_driver {
             class { 'postgresql::lib::java':
+                ensure       => $artifactory_ensure,
                 package_name => 'postgresql-jdbc',
                 before       => File['artifactory-jdbc'],
             }
         }
-        file { "${artifactory_home}/tomcat/lib/postgresql-jdbc.jar":
-            ensure => 'link',
-            target => '/usr/share/java/postgresql-jdbc.jar',
-            alias  => 'artifactory-jdbc',
+        if $artifactory_ensure == 'present' {
+            file { "${artifactory_home}/tomcat/lib/postgresql-jdbc.jar":
+                ensure => 'link',
+                target => '/usr/share/java/postgresql-jdbc.jar',
+                alias  => 'artifactory-jdbc',
+            }
         }
     }
 }

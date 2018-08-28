@@ -12,6 +12,8 @@
 # @example
 #   include artifactory::service
 class artifactory::service (
+    Enum['absent', 'present']
+            $artifactory_ensure         = $artifactory::ensure,
     String  $service_name               = $artifactory::service_name,
     Lsys::SrvEnsure
             $service_ensure             = $artifactory::service_ensure,
@@ -62,52 +64,77 @@ class artifactory::service (
     }
 
     if $::is_init_systemd {
-        # replace distributed with Artifactory setenv.sh file with custom
-        # considering that Artifactory is managed by Puppet on systemd running
-        # system
-        file { 'setenv.sh':
-            path    => "${tomcat_home}/bin/setenv.sh",
-            content => template($service_setenv_template),
-            owner   => $artifactory_user,
-        }
+        $setenv_script = "${tomcat_home}/bin/setenv.sh"
+        $service_unit = "/usr/lib/systemd/system/${service_name}.service"
+        $service_directory = "/etc/systemd/system/${service_name}.service.d"
+        if $artifactory_ensure == 'present' {
+            # replace distributed with Artifactory setenv.sh file with custom
+            # considering that Artifactory is managed by Puppet on systemd running
+            # system
+            file { 'setenv.sh':
+                path    => $setenv_script,
+                content => template($service_setenv_template),
+                owner   => $artifactory_user,
+            }
+            # environment file (or sysconfig file)
+            file { $service_config:
+                content => template($service_config_template),
+                notify  => Service['artifactory'],
+            }
+            # systemd unit
+            file { $service_unit:
+                content => template($service_systemd_template),
+                require => [
+                    File[$service_config],
+                    File['setenv.sh'],
+                ],
+                notify  => Exec['systemd-reload'],
+                before  => Service['artifactory'],
+            }
 
-        # environment file (or sysconfig file)
-        file { $service_config:
-            content => template($service_config_template),
-            notify  => Service['artifactory'],
-        }
+            file { $service_directory:
+                ensure                  => directory,
+                mode                    => '0755',
+                selinux_ignore_defaults => true,
+            }
 
-        # systemd unit
-        file { "/usr/lib/systemd/system/${service_name}.service":
-            content => template($service_systemd_template),
-            require => [
-                File[$service_config],
-                File['setenv.sh'],
-            ],
-            notify  => Exec['systemd-reload'],
-            before  => Service['artifactory'],
+            file { "${service_directory}/limits.conf":
+                content => template('artifactory/systemd/limits.conf.erb'),
+                notify  => Exec['systemd-reload'],
+                before  => Service['artifactory'],
+            }
         }
-
-        file { "/etc/systemd/system/${service_name}.service.d":
-            ensure                  => directory,
-            mode                    => '0755',
-            selinux_ignore_defaults => true,
-        }
-
-        file { "/etc/systemd/system/${service_name}.service.d/limits.conf":
-            content => template('artifactory/systemd/limits.conf.erb'),
-            notify  => Exec['systemd-reload'],
-            before  => Service['artifactory'],
+        else {
+            $cleanup_resources = [
+                $setenv_script,
+                $service_config,
+                $service_unit,
+                $service_directory
+            ]
+            file { $cleanup_resources:
+                ensure  => 'absent',
+                require => Service['artifactory'],
+            }
         }
     }
 
-    service { $service_name :
-        ensure     => $service_ensure,
-        hasstatus  => true,
-        hasrestart => true,
-        enable     => $service_enable,
-        alias      => 'artifactory',
-        require    => Package['artifactory'],
+    if $artifactory_ensure == 'present' {
+        service { $service_name:
+            ensure     => $service_ensure,
+            hasstatus  => true,
+            hasrestart => true,
+            enable     => $service_enable,
+            alias      => 'artifactory',
+            require    => Package['artifactory'],
+        }
+    }
+    else {
+        service { $service_name:
+            ensure => 'stopped',
+            enable => false,
+            alias  => 'artifactory',
+            before => Package['artifactory'],
+        }
     }
 
     # all Artifactory configuration should be set before service start
