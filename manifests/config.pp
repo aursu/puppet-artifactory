@@ -25,7 +25,6 @@ class artifactory::config (
     if $manage_users {
         group { $group:
             ensure => $artifactory_ensure,
-            before => User[$artifactory_user]
         }
 
         user { $artifactory_user:
