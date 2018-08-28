@@ -136,7 +136,10 @@ class artifactory::service (
             ensure => 'stopped',
             enable => false,
             alias  => 'artifactory',
-            before => Package['artifactory'],
+            before => [
+                Package['artifactory'],
+                User[$artifactory_user]
+            ]
         }
     }
 }
