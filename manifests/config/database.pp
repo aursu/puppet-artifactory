@@ -29,9 +29,11 @@ class artifactory::config::database (
         }
         if $manage_jdbc_driver {
             class { 'postgresql::lib::java':
-                ensure       => $artifactory_ensure,
-                package_name => 'postgresql-jdbc',
-                before       => File['artifactory-jdbc'],
+                package_ensure => $artifactory_ensure,
+                package_name   => 'postgresql-jdbc',
+            }
+            if $artifactory_ensure == 'present' {
+                Class['postgresql::lib::java'] -> File['artifactory-jdbc']
             }
         }
         if $artifactory_ensure == 'present' {
