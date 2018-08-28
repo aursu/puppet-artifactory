@@ -111,6 +111,7 @@ class artifactory::config (
         $cleanup_resources.each |String $path| {
             File[$path] {
                 ensure => 'absent',
+                backup => false,
                 force  => true,
             }
         }
