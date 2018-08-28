@@ -127,6 +127,9 @@ class artifactory::service (
             alias      => 'artifactory',
             require    => Package['artifactory'],
         }
+
+        # all Artifactory configuration should be set before service start
+        File <| tag == 'artifactory::config' |> -> Service['artifactory']
     }
     else {
         service { $service_name:
@@ -136,7 +139,4 @@ class artifactory::service (
             before => Package['artifactory'],
         }
     }
-
-    # all Artifactory configuration should be set before service start
-    File <| tag == 'artifactory::config' |> -> Service['artifactory']
 }
